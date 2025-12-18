@@ -1,0 +1,18 @@
+Work assignment:
+- Question 3E.1 &rarr; **Bruno**
+    - Question 3E.1.1
+    - Question 3E.1.2
+    - Question 3E.1.3
+    - Question 3E.1.4
+    - Question 3E.1.5
+    - Question 3E.1.6
+- Question 3E.2  &rarr; **Riccardo**
+    - Question 3E.2.1
+    - Question 3E.2.2
+    - Question 3E.2.3
+- Question 3E.3  &rarr; **Riccardo**
+    - Question 3E.3.1
+- Question 3E.4 &rarr; **Mix**
+    - Question 3E.4.1 &rarr; **Bruno**
+    - Question 3E.4.2 &rarr; **Bruno**
+    - Question 3E.4.3 &rarr; **Riccardo** ( or me, idk how hard is this question )
