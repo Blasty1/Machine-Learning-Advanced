@@ -10,6 +10,7 @@
 \newcommand{\elbo}{\mathcal{L}}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\p}{\mathbb{P}}
+\newcommand{\tr}{\text{Trace}}
 \newcommand{\q}{q}
 
 \title{Assignment 3E, 2025}
@@ -29,6 +30,112 @@ Riccardo Alfonso Cerrone \\
     \item[Group \#] 60 
 \end{description}
 
+\section*{3.1 Principal Component Analysis}
+\subsection*{Question 3.1.1}
+We are assuming that the columns of \textbf{W}  are orthonormal ( \(W^T W = I_{k \times  k}\) ): in other words W is full rank and its columns are a basis of the space that it spans.
+However $WW^T$ is not necessarily equal to $I_{d \times d}$. \\
+We are assuming that because in PCA we want to find a lower dimensional representation and \textbf{W} represents the principal directions/components onto which we project our data which should be uncorrelated. This ensures that each principal component captures distinct , non redundant information about the data's variability
+\subsection*{Question 3.1.2}
+We want to derive $x = W^+ y$ from $y=Wx$ knowing that $W^+ = V \Sigma^+ U^T$\\
+We can take the basic equation and multiply it by $W^T$
+\[
+W^T y = W^T W x 
+\]
+In PCA we assume that W is a matrix with orthonormal columns , so $W^T W = I_{k \times k}$
+\[
+W^T y = x
+\]
+We know, from the Module 7 slides, that if $W$ has linearly independent columns then it can be rewritten as
+\[
+W^+ = (W^T W)^{-1} W^T = (I_{k \times k})^{-1} W^T = W^T
+\]
+We can then replace it into the intermediate equation to get the final form.
+\[
+W^+ = W^T
+\]
+\[
+x=W^+ y
+\]
+\subsection*{Question 3.1.3}
+It is possible to apply this formula because $W$ in our assumption has linearly indepedent columns.
+\[
+W^+ = (W^T W)^{-1} W^T = (I_{k \times k})^{-1} W^T = W^T
+\]
+\subsection*{Question 3.1.4}
+If we perform PCA on data that has not been centered, you will encounter the following issue: First Principal Component Bias, where the first principal component will often point from the origin toward the center of the data cluster rather than along the direction of maximum variance. This happens because the model tries to minimize the squared distance to the origin, treating the mean offset as a massive "signal" to be captured.
+
+\subsection*{Question 3.1.5}
+A single SVD operation \textbf{is sufficient} to perform PCA both on the rows and the columns.\\
+We try to recover the same expression found in the slides of Module 7 for the optimization criterion but using the trasposal of Y\\
+Problem feature:
+\begin{itemize}
+  \item $Y \in R^{n \times d}$ 
+  \item $X \in R^{n \times k}$
+  \item $W \in R^{d \times k}$
+  \item $n$ is the number of datapoints
+  \item $d$ is the number of dimensions
+  \item $k$ is the desired number of dimensions ($k < d$)
+\end{itemize} 
+We are inverting the rows and the columns w.r.t the common representation of Y and X which is $Y \in R^{d \times n} $, $X \in R^{k \times n}$\\
+The mapping functions are:
+\begin{itemize}
+  \item Encoding $X = Y W$
+  \item Decoding $Y = X W^T$
+\end{itemize}
+The MSE can be seen as a reconstrunction error
+\begin{align*}
+  \E_W &= \E_Y\left[|| Y - dec(enc(Y))||_2^2 \right]\\
+  &= \E_Y\left[|| Y - Y W W^T||_2^2 \right]\\
+  &= \E_Y\left[(Y-Y W W^T)^T(Y-Y W W^T)\right]\\
+  &= \E_Y\left[Y Y^T - Y^T Y W W^T - W W^T Y^T Y + W W^T Y^T Y W W^T \right]\\
+  &= \E_Y[Y^T Y] - \tr(Y^T Y W W^T) - \tr(W W^T Y^T Y) + \tr(W W^T Y^T Y W W^T)
+\end{align*}
+As in the slide of Module 7 , $E_Y[Y^T Y]$ is constant and can be ignored for the optimization purpose
+We use the cycle property of the trace.
+\[
+  \E_W \approx - 2 \tr( W W^T Y^T Y) + \tr(W W^T W W^T Y^T Y)
+\]
+We know that $W^T W = I$
+\[
+  \E_W \approx - 2 \tr(W W^T Y^T Y)
+\]
+We apply the SVD on Y as $Y = U \Sigma V^T$ where
+\[
+U \in R^{n \times k} \quad \Sigma \in R^{k \times k} \quad V^T \in R^{n \times k}
+\]
+We replace it into the the previous definition
+\begin{align*}
+\tr\left(W W^T (U \Sigma V^T)^T (U \Sigma V^T)\right)\\
+\tr\left(W W^T V \Sigma \underbrace{U^T U}_{U^T U = I} \Sigma V^T\right)\\
+\tr\left(W W^T V \Sigma^2 V^T\right)\\
+\tr\left(V^T W W^T V \Sigma^2 \right) = \sigma_1^2 + \sigma_2^2 + . . . + \sigma_k \\
+\end{align*}
+We can see that the solution obtained is the same of what we would obtain using Y with the opposite structure ( $Y \in R^{d \times n}$ ) because the singular values are the same.
+
+\subsection*{Question 3.1.6}
+When we work with PCA, we should normalize each column ( feature ) when attributes represent quantities in different units but it should be avoided when values between attribues are comparable.\\
+The SVD of Y is 
+\[
+Y = U \Sigma V^T
+\]
+We can replace it in the Y' definition
+\[
+Y' = D Y = D U \Sigma V^T 
+\]
+The matrix $U' = D U$ is not necessarily orthonormal.\\
+\[
+  U' U'^T = (D U)^T (D U) = U^T D^T D U = U^T D^2 U
+\]
+In order to be orthonormal $D^2 = I$, it happens only when $c_j = \pm 1$\\
+It means that the left singular vectors are not simply scaled versions of those of Y and that $Y$ and $Y'$ have not the same singular values.
+The SVDs are related but not identical. The right singular vectors $V$ might remain the same in special cases, but generally both $U$ and $\Sigma$ will change when we scale the features.\\
+PCA wants to find the directions with the highest variance by  minimizing the trace ( showed above ) and the optimal solution is represented by
+\[
+W = U_k
+\]
+Where $U_k$ is obtained from the SVD of $Y = U \Sigma V^T$ by taking only the k columns of $U$ that correspond to the k largest singular values.\\
+We have proved that the SVDs of Y and Y' are different , for this reason the solutions to the optimal problem are different: the PCA directions for $Y'$ are not the same as for $Y$.
+In conclusion, PCA is sensitive to feature scaling.
 \section*{Appendix - Code}
 See the following pages.
 

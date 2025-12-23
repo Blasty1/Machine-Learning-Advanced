@@ -1,5 +1,5 @@
 Work assignment:
-- Question 3E.1 &rarr; **Bruno**
+- Question 3E.1 &rarr; **Bruno** ✅
     - Question 3E.1.1
     - Question 3E.1.2
     - Question 3E.1.3
