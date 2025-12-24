@@ -6,7 +6,7 @@ Work assignment:
     - Question 3E.1.4
     - Question 3E.1.5
     - Question 3E.1.6
-- Question 3E.2  &rarr; **Riccardo**
+- Question 3E.2  &rarr; **Riccardo** ✅
     - Question 3E.2.1
     - Question 3E.2.2
     - Question 3E.2.3
