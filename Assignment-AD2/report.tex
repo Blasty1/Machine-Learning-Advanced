@@ -307,4 +307,57 @@ It becomes:
     Var(X) &= \tr\left((I_k | 0) \Sigma^2 \binom{I_k}{0}\right)\\
     &= \sum_{i=1}^{k} \sigma_i^2
 \end{align*}
+\subsection*{Question C.5}
+We consider the residual points $Z = {z_1 , . . . , z_n}$ where $z_i = y_i - WW^T y_i$ and we want to show that its variance is given by $Var(Z)= \sum_{i=k+1}^{d}\sigma_i^2$\\
+We start from the definition of variance
+\begin{align*}
+    Var(Z) &= \sum_{i=1}^{n} || z_i - \bar{z}||_2^2\\
+    &= \sum_{i=1}^{n} || z_i ||_2^2\\
+    &= || Y - WW^TY||^2_F
+\end{align*}
+The residual points are zero centered, below we have the proof for that.
+\begin{align*}
+    \bar{z} &= \frac{1}{n} \sum_{i=1}^{n} y_i - W W^T y_i\\
+    &= \frac{1}{n} \sum_{i=1}^{n} y_i - W W^T y_i\\
+    &= \frac{1}{n} \sum_{i=1}^{n} y_i - \frac{1}{n} \sum_{i=1}^{n} W W^T y_i\\
+    &= \bar{y} - W W^T \bar{y}\\
+    &=0
+\end{align*}
+We will use the trace, its cyclic and linearty property for the proof, it is also very important to remmber that $W^T W = I_k$
+\begin{align*}
+    Var(Z) &= || Y - WW^TY||^2_F\\
+    &= \tr((Y - WW^TY)^T (Y - WW^TY)) \\
+    &= \tr((Y^T - Y^TWW^T) (Y - WW^TY))\\
+    &= \tr(Y^T Y - Y^T WW^TY - Y Y^TWW^T + Y^TWW^T WW^TY)\\
+    &= \tr(Y^T Y - 2Y^T WW^TY + Y^TWW^T WW^TY)\\
+    &= \tr(Y^T Y - 2Y^T WW^TY + Y^TWW^TY)\\
+    &= \tr(Y^T Y - Y^T WW^TY)\\
+    &= \tr(Y^T Y) - \tr(Y^T WW^TY)\\
+    &= \tr(Y^T Y) - \tr(WW^TY Y^T)
+\end{align*}
+Both of them have already been seen in the previous exercises, in particular:
+\begin{itemize}
+    \item $\tr(Y^T Y)$ has been discussed in the Question C.3 where we proved that
+\[
+\tr(Y^T Y)  = \sum_{i=1}^{d}\sigma_i^2
+\]
+    \item $\tr(WW^TY Y^T)$ has been discussed in the Question C.4 where we proved that
+\[
+\tr(WW^TY Y^T)  = \sum_{i=1}^{k}\sigma_i^2
+\]
+The final expression becomes:
+\begin{align*}
+Var(Z) &= \tr(Y^T Y) - \tr(WW^TY Y^T)\\
+&= \sum_{i=1}^{d}\sigma_i^2 - \sum_{i=1}^{k}\sigma_i^2\\
+&= \sum_{i=k+1}^{d}\sigma_i^2
+\end{align*}
+\end{itemize}
+We can conclude our discussion saying that:
+\[
+Var(Y) = Var(X) + Var(Z)
+\]
+\[
+Var(Y) = \sum_{i=1}^{k}\sigma_i^2 + \sum_{i=k+1}^{d}\sigma_i^2
+\]
+Where Var(Y) is the total variance and it can be computed by taking into account the variance explained by PCA ( Var(X) ) and the residual variance ( Var(Z) )
 \end{document}

@@ -8,7 +8,7 @@ Work assignment:
     - C.1 ✅
     - C.2 ✅ ( da controllare )
     - C.3 ✅
-    - C.4
+    - C.4 ✅
     - C.5
 
 - Assignment B
