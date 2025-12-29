@@ -264,4 +264,47 @@ Knowing these properties and the SVD $Y = U \Sigma V^T$, we can finally show tha
     &= \sum_{i=1}^{n} \sigma_i^2
 \end{align*}
 
+\subsection*{Question C.4}
+We want to show that the variance of the projected data X is given by $Var(X) = \sum_{i=1}^{k} \sigma_i^2$\\
+\[
+X = W^T Y
+\]
+\[
+W \in R^{d,k} \quad X \in R^{k,n} \quad Y \in R^{d,n}
+\]
+\begin{align*}
+    Var(X) &= \sum_{i=1}^{n} || x_i - \bar{x_i}||_2^2\\
+    &= \sum_{i=1}^{n} || x_i ||^2_2
+\end{align*}
+Since Y is zero centered ($\bar{y}=0$),the projected data is also zero centered:
+\begin{align*}
+    \bar{x} &=\frac{1}{n}\sum_{j=1}^{n} x_j\\
+    &= \frac{1}{n}\sum_{j=1}^{n} W^T y_j\\
+    &= W^T \bar{y}\\
+    &=0
+\end{align*}
+The proof is very similar to the previous exercise , we will exploit the trace its cyclic property.
+\begin{align*}
+    Var(X) &= ||X||_F^2\\
+    &= ||W^T Y||_F^2\\
+    &= \tr((W^T Y)^T (W^T Y) )\\
+    &= \tr(Y^T W W^T Y)\\
+    &= \tr(W W^T Y Y^T)\\
+    &= \tr(W W^T U \Sigma V^T V \Sigma^T U^T)\\
+    &= \tr(W W^T U \Sigma^2 U^T)
+\end{align*}
+We know that $W=U_k$ from the slide of the Module 7 ( PCA theory )
+\begin{align*}
+    Var(X) &= \tr(U_k U_k^T U \Sigma^2 U^T)\\
+    &= \tr(U_k^T U \Sigma^2 U^T U_k )
+\end{align*}
+We know that:
+\[
+U_k^T U = (I_k | 0) \quad U^T U_k = \binom{I_k}{0} 
+\]
+It becomes:
+\begin{align*}
+    Var(X) &= \tr\left((I_k | 0) \Sigma^2 \binom{I_k}{0}\right)\\
+    &= \sum_{i=1}^{k} \sigma_i^2
+\end{align*}
 \end{document}
