@@ -11,6 +11,8 @@
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\p}{\mathbb{P}}
 \newcommand{\q}{q}
+\newcommand{\tr}{\text{Trace}}
+
 
 \title{Assignment 2AD, 2025}
 \subtitle{DD2434 Machine Learning, Advanced Course}
@@ -145,5 +147,121 @@ Key findings:
     \item \textbf{Strong left-wing cooperation} The highest cross-group support rates appear among left-wing groups, particularly Greens/EFA supporting GUE/NGL proposals (91-99\%), indicating that the left bloc votes together more cohesively than the right.
 \end{itemize}
 MDS showed that groups vote similarly while Support matrix shows who leads and who follows (e.g., Greens support S\&D proposals 74\%, but S\&D supports Greens 61\% - slightly asymmetric). This makes the support matrix analysis particularly valuable for understanding legislative effectiveness and coalition formation in the European Parliament rather than just having an overall ideological structure with MDS.
+
+\section*{C Section}
+\subsection*{Question C.1}
+Considering a dataset matrix $Y \in R^{d \times n}$, its SVD $Y = U \Sigma V^T$ and the similarity matrix $S =Y^T Y$, we want to prove that $S = V \Sigma^2 V^T$
+\begin{align*}
+S = Y^T Y &= (U \Sigma V^T)^T (U \Sigma V^T)\\
+&= V \Sigma^T U^T U \Sigma V^T
+\end{align*}
+Since $U$ is known to be orthonormal from the SVD definition
+\[
+U^T U = I
+\]
+\[
+S = V \Sigma^T \Sigma V^T
+\]
+$\Sigma$ is a diagional matrix with no-negative entries
+\[
+\Sigma^T = \Sigma \quad \Sigma^T \Sigma = \Sigma^2
+\]
+We finally obtain
+\[
+S = V \Sigma^2 V^T
+\]
+\subsection*{Question C.2}
+We want to prove that the two embeddings ( MDS and PCA ) differ only by an orthogonal transform such that $X_{PCA} = R X_{MDS}$ and that for Euclidean data MDS and PCA have the yield to the same embedding ( up to rotation )\\
+Theoretical concepts:
+\begin{itemize}
+    \item MDS embedding
+\[S = U \Lambda U^{-1} = U \Lambda U^T \]
+\[X_{MDS} = I_{k \times n} \Lambda^{0.5} U^T = \Lambda_k^{0.5}U_k^T\]
+$\Lambda_k$ is the diagonal matrix of top k eigenvalues while $U_k$ represents the first k columns of U ( top k eigenvectors )
+    \item PCA embedding
+\[
+Y= U^{SVD} \Sigma V^T
+\]
+\[
+X_{PCA} = (U_k^{SVD})^T Y
+\]
+Knowing that $S = Y^T Y = V \Sigma^2 V^T$ and $S = U \Lambda U^T$
+\begin{itemize}
+    \item Eigenvectors of S are the right singular vectors V of Y
+    \item Eigenvalues of S are the square singular values $\lambda_i = \sigma_i^2$
+\end{itemize}
+\[
+U = V \quad \Lambda = \Sigma^2
+\]
+\end{itemize}
+\newpage
+We can rewrite both $X_{MDS}$ and $X_{PCA}$ to find a common definition:
+\begin{itemize}
+    \item $X_{MDS} = \Sigma_k V_k^T$\\
+Replacing $U = V \quad \Lambda = \Sigma^2$ into its original definition $X_{MDS} = \Lambda_k^{0.5} U_k^T$
+    \item $X_{PCA} = (U_k^{SVD})^T Y = (U_k^{SVD})^T (U_{SVD} \Sigma V^T) = \Sigma_k V_k^T$\\
+We have obtained the final form by using this expression $(U_k^{SVD})^T U^{SVD} = [ I_k | 0]$ 
+\end{itemize}
+We can compare the two expressions and see that:
+\[
+X_{PCA} = \Sigma_k V_k^T \quad X_{MDS} = \Sigma_k V_k^T
+\]
+\[
+X_{PCA} = I_k X_{MDS}
+\]
+Where $I_k$ is the identity matrix $R^{k \times k}$ which is orthogonal.
+We have proved that:
+\[
+R = I_k
+\]
+For Euclidean data ( zero centered ), classical MDS yields exactly the same embedding as PCA ( they differ by an orthogonal transformation with $R=I_k$ which is the identity rotation)\\
+In simpler words: MDS works on distances while PCA works on variances. They only align when the data is centered.
+\subsection*{Question C.3}
+We want to show that the variance of the dataset $Var(Y) = \sum_{y \in Y} || y - \bar{y}||_2^2$ can be expressed as $Var(Y) = \sum_{i=1}^d \sigma_i^2$.\\
+We know that the data is zero-centered ($\bar{y}=0$)\\
+\begin{align*}
+    Var(y) &= \sum_{y \in Y} ||y||^2_2\\
+    &= \sum_{i=1}^{n} ||y_i||^2_2\\
+    &= \sum_{i=1}^{n} \sum_{j=1}^{d} y_{ij}^2\\
+    &= || Y ||^2_F
+\end{align*}
+$|| Y ||^2_F$ is the Frobenius Norm.\\
+We want to show that:
+\[
+|| Y |||_F^2 = \sum_{i=1}^{d} \sigma_i^2
+\]
+We can start noticing that the Frobenius norm can be expressed using the trace
+\begin{align*}
+    \tr(Y^T Y) &= \sum_{j=1}^{n} (Y^T Y)_{jj}\\
+    &= \sum_{j=1}^{n} \sum_{i=1}^{d} Y_{ji}^T Y_{ij}\\
+    &= \sum_{j=1}^{n} \sum_{i=1}^{d} Y_{ij} Y_{ij}\\
+    &= \sum_{j=1}^{n} \sum_{i=1}^{d} Y_{ij}^2\\
+    &= ||Y||_F^2
+\end{align*}
+We can prove that multiplying with an orthonormal matrix ($U^TU=I$ or $V^TV = I$) does not change the Frobenius norm:
+
+\begin{equation*}
+    \begin{aligned}[t]
+        \|UY\|^2_F &= \text{tr}((UY)^T (UY)) \\
+        &= \text{tr}(Y^T U^T U Y) \\
+        &= \text{tr}(Y^T Y) \\
+        &= \|Y\|_F^2
+    \end{aligned}
+    \hspace{2cm} % Adjust this value to change the gap
+    \begin{aligned}[t]
+        \|YV^T\|^2_F &= \text{tr}((YV^T)^T (YV^T)) \\
+        &= \text{tr}(V Y^T Y V^T) \\
+        &= \text{tr}(Y^T Y V^T V) \\
+        &= \text{tr}(Y^T Y) \\
+        &= \|Y\|_F^2
+    \end{aligned}
+\end{equation*}
+Knowing these properties and the SVD $Y = U \Sigma V^T$, we can finally show that:
+\begin{align*}
+    ||Y||_F^2 &= ||U \Sigma V^T ||_F^2\\
+    &= ||\Sigma V^T||^2_F\\
+    &= ||\Sigma||^2_F\\
+    &= \sum_{i=1}^{n} \sigma_i^2
+\end{align*}
 
 \end{document}
