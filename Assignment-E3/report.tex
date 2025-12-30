@@ -32,7 +32,7 @@ Riccardo Alfonso Cerrone \\
     \item[Group \#] 60 
 \end{description}
 
-\section*{3.1 \quad Principal Component Analysis}
+\section*{3E.1 \quad Principal Component Analysis}
 \subsection*{Question 3.1.1}
 We are assuming that the columns of \textbf{W}  are orthonormal ( \(W^T W = I_{k \times  k}\) ): in other words W is full rank and its columns are a basis of the space that it spans.
 However $WW^T$ is not necessarily equal to $I_{d \times d}$. \\
@@ -218,7 +218,67 @@ In the following, the heuristic is applied to the previous toy dataset.
     \label{fig:isomap_rho}
 \end{figure}
 
-\section*{3.4 \quad Spectral graph analysis}
+\section*{3E.3 \quad PCA vs. Johnson-Lindenstrauss random projections}
+\subsection*{Question 3E.3.1}
+\begin{itemize}
+    \item \textbf{Projection error}
+\\
+In PCA the criterion to be optimized is the mean squared reconstruction error, defined as
+\begin{equation*}
+    E_{A_\text{PCA}} =
+    \mathbb{E}_{y} \left[
+        \left\lVert
+        y - \mathrm{dec}\!\left( \mathrm{cod}\!\left( y \right) \right)
+        \right\rVert_2^2
+    \right]
+    =
+    \mathbb{E}_{y} \left[
+        \left\lVert
+        y - A_\text{PCA} A_\text{PCA}^T y
+        \right\rVert_2^2
+    \right].
+\end{equation*}
+The main idea behind PCA is to minimize, on average over the data distribution, the squared distance between each data point and its reconstruction in the reduced subspace. This makes PCA optimal in terms of expected reconstruction error, but it does not provide explicit guarantees on preserving pairwise distances between points. According to this criterion, it follows that
+\begin{equation}
+    A_{\text{PCA}} = U_k^T,
+\end{equation}
+where $U_k$ denotes the matrix formed by the first $k$ columns of $U$ obtained from the singular value decomposition $Y = U \Sigma V^T$.
+
+
+On the other hand, Johnson--Lindenstrauss random projections are explicitly designed to preserve pairwise distances between points after projection, i.e.
+\begin{equation*}
+    \left\lVert y_i - y_j \right\rVert_2
+    \approx
+    \left\lVert
+        f\!\left( y_i \right) - f\!\left( y_j \right)
+    \right\rVert_2
+    =
+    \left\lVert
+        A_{\text{JL}} \, y_i - A_{\text{JL}} \, y_j
+    \right\rVert_2,
+    \quad
+    \forall y_i, y_j \in Y.
+\end{equation*}
+According to the Johnson--Lindenstrauss theorem, this property holds with high probability for all pairs of points, independently of the data distribution. From this result, the projection matrix can be expressed as
+\begin{equation}
+    A_{\text{JL}} = \sqrt{\dfrac{d}{k}} \, Z
+\end{equation}
+where $Z \in \mathbb{R}^{k \times d}$ is the matrix whose rows are $k$ independent random vectors drawn uniformly from the unit sphere in $\mathbb{R}^d$.
+
+Unlike PCA, JL projections do not minimize a reconstruction error, but instead control the distortion of pairwise distances.
+
+\item \textbf{Computational efficiency} \\
+From a computational perspective, PCA is more expensive to compute, since it requires performing a singular value decomposition in order to determine the projection matrix $A_{\text{PCA}}$. This step involves a non-negligible computational cost and must be repeated whenever the data distribution changes.
+
+In contrast, Johnson--Lindenstrauss random projections do not require any training phase: the projection matrix $A_{\text{JL}}$ is obtained by directly drawing random vectors from the uniform distribution. 
+
+As a result, JL projections are computationally cheaper to construct and can be applied immediately, independently of the data.
+
+\item \textbf{Target usecases} \\
+PCA is preferred when reconstruction quality and data adaptivity are required, whereas JL projections are more appropriate when distance preservation and scalability are the primary concerns.
+\end{itemize}
+
+\section*{3E.4 \quad Spectral graph analysis}
 \subsection*{Question 3.4.1}
 Considering a d-regular graph G=(V,E) and A its adjacency matrix with the normalized Laplacian of G as $L=I-\frac{1}{d}A$. We want to prove that for any vector $x \in R^{|V|}$ it is
 \[ 
