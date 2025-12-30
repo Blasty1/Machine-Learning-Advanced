@@ -4,6 +4,8 @@
 \usepackage{amsfonts}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
 \usepackage{listings}
 
 
@@ -30,7 +32,7 @@ Riccardo Alfonso Cerrone \\
     \item[Group \#] 60 
 \end{description}
 
-\section*{3.1 Principal Component Analysis}
+\section*{3.1 \quad Principal Component Analysis}
 \subsection*{Question 3.1.1}
 We are assuming that the columns of \textbf{W}  are orthonormal ( \(W^T W = I_{k \times  k}\) ): in other words W is full rank and its columns are a basis of the space that it spans.
 However $WW^T$ is not necessarily equal to $I_{d \times d}$. \\
@@ -136,6 +138,86 @@ W = U_k
 Where $U_k$ is obtained from the SVD of $Y = U \Sigma V^T$ by taking only the k columns of $U$ that correspond to the k largest singular values.\\
 We have proved that the SVDs of Y and Y' are different , for this reason the solutions to the optimal problem are different: the PCA directions for $Y'$ are not the same as for $Y$.
 In conclusion, PCA is sensitive to feature scaling.
+
+\section*{3E.2 \quad Isomap}
+
+\subsection*{Question 3E.2.1}
+As discussed during the lectures, in Isomap the neighborhood graph $G$ is constructed by connecting each data point to its $\rho$-nearest neighbors. This construction, however, does not guarantee that the resulting graph is connected.
+
+The graph $G$ may become disconnected when the chosen neighborhood size $\rho$ is too small relative to the data distribution. In such cases, points that are close along the underlying manifold may fail to be connected, either directly or indirectly, in the neighborhood graph.
+
+As a simple illustrative example, we consider the following set of points embedded in two dimensions.
+
+\begin{description}
+    \item[Note] Although the example is illustrated in two dimensions for visualization purposes, the $\rho$-nearest neighbor graph construction is independent of the ambient dimension and applies identically in higher-dimensional spaces.
+\end{description}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.23\textwidth]{fig/dataset.jpeg}
+    \caption{Toy dataset used to illustrate disconnected neighborhood graphs.}
+\end{figure}
+
+If Isomap is applied using a very small neighborhood size (e.g.\ $\rho = 1$), the resulting neighborhood graph contains multiple disconnected components:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.23\textwidth]{fig/rho1.JPG}
+    \caption{Neighborhood graph for $\rho = 1$.}
+\end{figure}
+
+As shown in the figure, the local neighborhoods do not connect to each other, causing the graph to fragment into two disconnected components.
+
+\subsection*{Question 3E.2.2}
+Since Isomap approximates geodesic distances using shortest paths in the neighborhood graph $G$, a disconnected graph makes these distances undefined between points belonging to different connected components. Consequently, geodesic distances cannot be computed for all pairs of points, and the subsequent multidimensional scaling (MDS) step cannot produce a single meaningful embedding of the entire dataset. This is undesirable because Isomap then fails to capture and preserve the global manifold structure.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.23\textwidth]{fig/rho1col.JPG}
+    \caption{$\rho = 1$: the geodesic distance between the two highlighted points is undefined.}
+\end{figure}
+
+\subsection*{Question 3E.2.3}
+A simple and effective heuristic to avoid obtaining a disconnected neighborhood graph in Isomap is to adopt an incremental strategy for selecting the neighborhood size $\rho$.
+
+The idea is to start with a small value of $\rho$ (e.g.\ $\rho = 1$) and gradually increase it, for instance in steps of one, until the neighborhood graph becomes connected. At each iteration, the geodesic distance matrix is computed using shortest paths in the graph. If the graph is disconnected, some pairwise geodesic distances will be undefined; in practice, these can be represented as $\infty$ or NaN values. The procedure is repeated until all pairwise geodesic distances are defined, indicating that the graph is connected.
+
+The intuition behind this heuristic is to use the smallest neighborhood size that guarantees global connectivity, thereby preserving the local geometry of the manifold while still allowing information to propagate across the entire dataset. This approach is expected to work well in practice because it adapts the neighborhood size to the data density: sparse regions are connected only when necessary, while overly large neighborhoods that would introduce short-circuiting edges are avoided.
+
+In the following, the heuristic is applied to the previous toy dataset.
+
+\begin{figure}[H]
+    \centering
+
+    \begin{subfigure}[t]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/dataset.jpeg}
+        \caption{$\rho = 0$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/rho1.JPG}
+        \caption{$\rho = 1$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/rho2.JPG}
+        \caption{$\rho = 2$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/rho3.JPG}
+        \caption{$\rho = 3$}
+    \end{subfigure}
+
+    \caption{Neighborhood graph as a function of the neighborhood size $\rho$. 
+    For small values of $\rho$ the graph is disconnected; increasing $\rho$ progressively merges local components until the graph becomes connected.}
+    \label{fig:isomap_rho}
+\end{figure}
+
 \section*{Appendix - Code}
 See the following pages.
 
