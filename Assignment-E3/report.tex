@@ -218,6 +218,42 @@ In the following, the heuristic is applied to the previous toy dataset.
     \label{fig:isomap_rho}
 \end{figure}
 
+\section*{3.4 \quad Spectral graph analysis}
+\subsection*{Question 3.4.1}
+Considering a d-regular graph G=(V,E) and A its adjacency matrix with the normalized Laplacian of G as $L=I-\frac{1}{d}A$. We want to prove that for any vector $x \in R^{|V|}$ it is
+\[ 
+x^T L x = \frac{1}{d}\sum_{(u,v)\in E} (x_u - x_v)^2
+\]
+We start from the right-hand side and work our way to $x^T L x$
+\begin{align*}
+  \frac{1}{d}\sum_{(u,v)\in E} (x_u - x_v)^2 &= \frac{1}{d} \left( \sum_{(u,v)\in E} \left(x_u^2 + x_v^2\right) - 2\sum_{(u,v)\in E} x_u x_v \right)\\
+\end{align*}
+Since the graph is undirected, the sum $\sum_{(u,v)\in E} \left(x_u^2 + x_v^2\right)$ ranges over unordered edges, each appearing exactly once.
+For a fixed vertex $w\in V$, the term $x_w^2$ appears once for every edge incident to $w$.
+Because the graph is $d$-regular, vertex $w$ is incident to exactly $d$ edges.
+Hence $x_w^2$ appears exactly $d$ times in the sum, and therefore
+\[
+\sum_{(u,v)\in E} (x_u^2 + x_v^2)
+= d \sum_{w\in V} x_w^2.
+\]
+We can replace it in the proof.
+\begin{align*}
+  \frac{1}{d}\sum_{(u,v)\in E} (x_u - x_v)^2 &= \frac{1}{d} \left( d\sum_{(w)\in E} x_w^2 - 2\sum_{(u,v)\in E} x_u x_v \right)\\
+  &= \sum_{(w)\in E} x_w^2 - \frac{2}{d}\sum_{(u,v)\in E} x_u x_v\\
+  &= x^T x - \frac{2}{d} \left(\frac{1}{2} \sum_{u,v} A_{uv} x_u x_v\right)\\
+  &= x^T x - \frac{1}{d} x^T A x\\
+  &= x^T \left(I -\frac{1}{d} A \right)x\\
+  &= x^T L x
+\end{align*}
+
+\subsection*{Question 3.4.2}
+We want to prove that the normalized Laplacian ($L=I-\frac{1}{d}A$) is a positive semidefinite matrix.\\
+A matrix is positive semidefine if $x^TLx \geq 0 \quad \forall x \in R^{|V|}$\\
+We know from the theory and from the previous exercise that:
+\[
+x^T L x = \frac{1}{d}\sum_{(u,v) \in E} (x_u - x_v)^2
+\]
+The expression $x^TLx$ is defined as a sum of squared values, it means that its final result will be always greater or equal to 0 by definition.
 \section*{Appendix - Code}
 See the following pages.
 
