@@ -225,18 +225,18 @@ In the following, the heuristic is applied to the previous toy dataset.
 \\
 In PCA the criterion to be optimized is the mean squared reconstruction error, defined as
 \begin{equation*}
-    E_{A_\text{PCA}} =
-    \mathbb{E}_{y} \left[
-        \left\lVert
-        y - \mathrm{dec}\!\left( \mathrm{cod}\!\left( y \right) \right)
-        \right\rVert_2^2
-    \right]
-    =
-    \mathbb{E}_{y} \left[
-        \left\lVert
-        y - A_\text{PCA} A_\text{PCA}^T y
-        \right\rVert_2^2
-    \right].
+E_{A_\text{PCA}}=
+\mathbb{E}_{y}\left[
+\left\lVert
+y-\mathrm{dec}\!\left(\mathrm{cod}\!\left(y\right)\right)
+\right\rVert_2^2
+\right]
+=
+\mathbb{E}_{y}\left[
+\left\lVert
+y-A_{\text{PCA}}^T A_{\text{PCA}}\,y
+\right\rVert_2^2
+\right]
 \end{equation*}
 The main idea behind PCA is to minimize, on average over the data distribution, the squared distance between each data point and its reconstruction in the reduced subspace. This makes PCA optimal in terms of expected reconstruction error, but it does not provide explicit guarantees on preserving pairwise distances between points. According to this criterion, it follows that
 \begin{equation}
