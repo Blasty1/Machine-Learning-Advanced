@@ -314,6 +314,15 @@ We know from the theory and from the previous exercise that:
 x^T L x = \frac{1}{d}\sum_{(u,v) \in E} (x_u - x_v)^2
 \]
 The expression $x^TLx$ is defined as a sum of squared values, it means that its final result will be always greater or equal to 0 by definition.
+
+\subsection*{Question 3E.4.3}
+In linear algebra, the trivial vector is the zero vector $\mathbf{0}$. In this optimization problem, however, there is also an uninformative family of solutions given by any constant vector $x=c\,\mathbf{1}$. Indeed, in this case all vertices receive the same coordinate, hence the embedding collapses to a single point and carries no information about the graph geometry.
+
+To interpret the 1D embedding induced by a non-trivial minimizer $x_*$, we use Equation (4):
+\[
+x^{\top} L x=\frac{1}{d}\sum_{(u,v)\in E}(x_u-x_v)^2.
+\]
+Minimizing $x^{\top} L x$ means making $(x_u-x_v)^2$ small for every edge $(u,v)$, that is, it encourages adjacent vertices to be mapped to nearby points on the real line. In other words, the entries of $x_*$ can be used as 1D coordinates, assigning to each vertex $v$ the real value $(x_*)_v$.
 \section*{Appendix - Code}
 See the following pages.
 
