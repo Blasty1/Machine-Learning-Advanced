@@ -360,4 +360,85 @@ Var(Y) = Var(X) + Var(Z)
 Var(Y) = \sum_{i=1}^{k}\sigma_i^2 + \sum_{i=k+1}^{d}\sigma_i^2
 \]
 Where Var(Y) is the total variance and it can be computed by taking into account the variance explained by PCA ( Var(X) ) and the residual variance ( Var(Z) )
+
+\section*{B Section}
+
+\subsection*{Question B.1}
+D is the degree matrix, a diagonal matrix where:
+\begin{itemize}
+\item $D_{ii} = \sum_{j} A_{ij}$ which is the degree of node i (the number of edges connected to it)
+\item $D_{ij} = 0$ for all $i \neq j$ (off-diagonal entries are zero)
+\end{itemize}
+
+P is the transition probability matrix for a random walk on the graph:
+\[
+P_{ij} = \frac{A_{ij}}{D_{ii}} = \frac{A_{ij}}{\text{degree of node i}}
+\]
+$P_{ij}$ is the probability of moving from node i to node j in one step if you randomly choose one of node i's neighbors.
+
+The similarity measure S is defined using the variable k:
+\[
+S_{ij} = \sum_{k=1}^{\infty} \alpha^k P_{ij}^k
+\]
+
+k is the number of steps (or path length) in a random walk:
+\begin{itemize}
+\item k=1: one-step paths (direct neighbors)
+\item k=2: two-step paths (neighbors of neighbors)
+\item k=3: three-step paths, and so on...
+\end{itemize}
+
+Let's go deeper into the definition of the similarity measure:
+\begin{itemize}
+\item $P_{ij}^k$ is the probability of reaching node j from node i in exactly k steps via a random walk. A large value indicates many k-step paths exist between i and j.
+
+\item $\alpha^k$ is the decay factor: it gives exponentially decreasing weight to longer paths, ensuring direct connections (small k) contribute more than distant connections (large k)
+\begin{itemize}
+\item The decay parameter balances local vs. global structure: smaller $\alpha$ emphasizes direct connections, while larger $\alpha$ considers longer-range connections.
+\item The decay parameter ensures we don't count very long, indirect paths too heavily (nearby structure matters more than distant connections).
+\item The condition on the decay parameter ($0 < \alpha < 1$) allows the infinite sum to converge to a finite value
+\end{itemize}
+
+\item $\sum_{k=1}^{\infty}$ sums the contributions from all path lengths, combining information from direct connections, common neighbors, and broader network structure.
+\end{itemize}
+
+S captures the idea that two nodes are similar if they are connected through many paths of various lengths.
+
+\subsection*{Question B.2}
+For all $i,j \in V$, we want to prove that 
+\begin{itemize}
+    \item $P_{ij} \leq 1$\\
+\[
+P = D^{-1} A 
+\] 
+\[
+P_{ij} = \frac{A_{ij}}{D_{ii}} = \frac{A_{ij}}{\sum_{j} A_{ij}}
+\]
+Because $A_{ij}$ is either $0$ or $1$, and $D_{ii}$ is the sum of all entries in row $i$, it follows that $A_{ij} \leq D_{ii}$. Consequently, the ratio is a binary value divided by a positive integer, which implies $0 \leq P_{ij} \leq 1$.
+    \item $S_{ij} < + \infty$\\
+\begin{align*}
+    S_{ij} &= \sum_{k=1}^{\infty} \alpha^k P_{ij}^k\\
+    S &= \sum_{k=1}^{\infty} \alpha^k P^k
+    = \sum_{k=0}^{\infty} (\alpha P)^k - I
+\end{align*}
+It is a geometric series which will converge to a finite value if $-1 <\alpha P < 1$: we know that $P_{ij} < 1$ and by definition of the problem we can assume $0 < \alpha < 1$. 
+\[
+S = (I-\alpha P)^{-1} - I
+\]
+Since the result is a well-defined finite matrix, every entry $S_{ij}$ must be finite ($S_{ij} < +\infty$).
+\end{itemize}
+
+\subsection*{Question B.3}
+We want to show that S can be computed efficiently using a matrix inversion operation.
+\begin{align*}
+    S &= \sum_{k=1}^{\infty} \alpha^k P^k\\
+    &= \sum_{k=0}^{\infty} (\alpha P)^k - I\\
+    &= (I-\alpha P)^{-1} - I
+\end{align*}
+Complexity:
+\begin{itemize}
+    \item Compute $I-\alpha P$ is $O(n^2)$
+    \item Invert $I-\alpha P$ is $O(n^3)$
+\end{itemize}
+Total complexity is then $O(n^3)$ with $n=|V|$
 \end{document}

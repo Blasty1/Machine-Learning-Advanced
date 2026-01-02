@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1767118507.08878 "/Users/brunobryan/Desktop/Programmazione/Machine-Learning-Advanved/Assignment-E3/report.tex" "report.pdf" "report" 1767118507.79246 0
-  "/Users/brunobryan/Desktop/Programmazione/Machine-Learning-Advanved/Assignment-E3/report.tex" 1767118506.79947 12629 461c6f0ac826aed437efccb0d4bbe3d5 ""
+["pdflatex"] 1767352301.77646 "/Users/brunobryan/Desktop/Programmazione/Machine-Learning-Advanved/Assignment-E3/report.tex" "report.pdf" "report" 1767352302.8518 0
+  "/Users/brunobryan/Desktop/Programmazione/Machine-Learning-Advanved/Assignment-E3/report.tex" 1767352300.08432 16535 2bd21555d9115217cc0dd77d985c47d1 ""
   "/Users/brunobryan/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk" 1763892558.45586 12644 0e6dc0bccb8d8754be58f4023273319f ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -12,6 +12,8 @@
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm" 1246382020 940 75ac932a52f80982a9f8ea75d03a34cf ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1246382020 940 228d6584342e91276bf566bcf9716b83 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
+  "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm" 1136768653 1344 8a0be4fe4d376203000810ad4dc81558 ""
+  "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm" 1136768653 1332 1fde11373e221473104d6cc5993f046e ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1136768653 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm" 1136768653 1528 abec98dbc43e172678c11b3b9031252a ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -34,6 +36,7 @@
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb" 1248133631 28902 2f5c04fd2884d1878057baa5aad22765 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
@@ -88,8 +91,8 @@
   "fig/rho1col.JPG" 1767111995.70105 60944 8b72f6ab165a18d3376131d73705967f ""
   "fig/rho2.JPG" 1767111995.70167 84427 0a0444043cdb307ea640cfc1785222b9 ""
   "fig/rho3.JPG" 1767111995.70246 113337 a43ae423d135a9d473ca881257abf087 ""
-  "report.aux" 1767118507.73978 985 f747624a70ef7632ea333d10e4c16cf0 "pdflatex"
-  "report.tex" 1767118506.79947 12629 461c6f0ac826aed437efccb0d4bbe3d5 ""
+  "report.aux" 1767352302.77402 985 4dc90bc96192f22d9a1d659d9f7cce71 "pdflatex"
+  "report.tex" 1767352300.08432 16535 2bd21555d9115217cc0dd77d985c47d1 ""
   (generated)
   "report.aux"
   "report.log"
