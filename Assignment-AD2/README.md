@@ -16,7 +16,7 @@ Work assignment:
     - B.2 ✅
     - B.3 ✅
 - Assignment A
-    - A.1
+    - A.1 
     - A.2
     - A.3
     - A.4

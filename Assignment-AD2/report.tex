@@ -441,4 +441,37 @@ Complexity:
     \item Invert $I-\alpha P$ is $O(n^3)$
 \end{itemize}
 Total complexity is then $O(n^3)$ with $n=|V|$
+
+\section*{A Section}
+Multidimensional Scaling (MDS) is a dimensionality reduction technique that aims to embed high-dimensional data into a lower-dimensional space while preserving pairwise distances. Given a distance matrix $\mathbf{D} \in \mathbb{R}^{n \times n}$ containing all pairwise distances $d_{ij}$ between $n$ data points, the goal is to find a $k$-dimensional representation $\mathbf{x}_i \in \mathbb{R}^k$ for each point $i$, where typically $k \ll n$. These vectors can be arranged into a configuration matrix $\mathbf{X} = [\mathbf{x}_1, \ldots, \mathbf{x}_n] \in \mathbb{R}^{k \times n}$.
+
+The quality of the embedding is measured by the stress function:
+\begin{equation}
+E(\mathbf{X}) = \sum_{i<j} w_{ij} \left(d_{ij} - \|\mathbf{x}_i - \mathbf{x}_j\|\right)^2,
+\end{equation}
+where $w_{ij}$ are weights that can either be specified as input or computed from the distances themselves. This objective quantifies the discrepancy between the original distances and the Euclidean distances in the embedded space.
+
+Since the stress function does not admit a closed-form solution, numerical optimization methods such as gradient descent are employed to find the configuration $\mathbf{X}$ that minimizes $E(\mathbf{X})$.
+\subsection*{Question A.1}
+We want to show that the gradient of E wrt a point $x_i$ is 
+\[
+\nabla_{x_i} E = 2 \sum_{j\ne i} w_{ij} \left(1-\frac{d_{ij}}{||x_i - x_j||}\right)(x_i-x_j)
+\]
+We start from the definition of E:
+\[
+E(X) = \sum_{i<j} w_{ij} \left(d_{ij} - \|x_i - x_j\|\right)^2
+\]
+We apply the gradient wrt $x_i$ and we used the linearity and chain rule property of it.
+\begin{align*}
+    \nabla_{x_i} E(x) &= \nabla_{x_i} \left( \sum_{i<j} w_{ij} \left(d_{ij} - \|x_i - x_j\|\right)^2 \right)\\
+    &= \nabla_{x_i} \left( \frac{1}{2} \sum_{k=1}^{n} \sum_{j \ne k} w_{kj} \left(d_{kj} - \|x_k - x_j\|\right)^2 \right)\\
+\end{align*}
+Because the distance function $||x_k - x_j||$ and the weights $w_{kj}$ are symmetric , the derivative of the terms where $k=i$ is identical to the derivative of the terms where $j=i$
+\begin{align*}
+    \nabla_{x_i} E(x) &= \frac{1}{2} \sum_{i \ne j} w_{ij}  \nabla_{x_i} \left( \left(d_{ij} - \|x_i - x_j\|\right)^2 \right)\\
+    &= \frac{1}{2} \sum_{i \ne j} 2 w_{ij}  \left(d_{ij} - \|x_i - x_j\|\right) \nabla_{x_i}\left(- ||x_i - x_j||\right)\\
+    &= \frac{1}{2} \sum_{i \ne j} 2 w_{ij}  \left(d_{ij} - \|x_i - x_j\|\right) \left(-\frac{x_i - x_j}{||x_i - x_j||}\right)\\
+    &= 2 \sum_{i \ne j} w_{ij}  \left(1- \frac{d_{ij}}{||x_i - x_j||} \right)\left(x_i - x_j\right)
+\end{align*}
+The 2 comes from the fact that each pair $(i,j)$ contributes to the gradient twice when we differentiate with respect to $x_i$.\\
 \end{document}
