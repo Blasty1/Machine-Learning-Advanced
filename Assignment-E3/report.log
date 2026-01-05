@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.21)  2 JAN 2026 12:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.21)  5 JAN 2026 18:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -351,79 +351,81 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 {/usr/local/texlive/2025basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 126--128
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 179--181
 
  []
 
 
 
-[3]
-<fig/dataset.jpeg, id=26, 1003.75pt x 1515.6625pt>
+[4]
+<fig/dataset.jpeg, id=28, 1003.75pt x 1515.6625pt>
 File: fig/dataset.jpeg Graphic file (type jpg)
 <use fig/dataset.jpeg>
-Package pdftex.def Info: fig/dataset.jpeg  used on input line 157.
+Package pdftex.def Info: fig/dataset.jpeg  used on input line 210.
 (pdftex.def)             Requested size: 96.19698pt x 145.2383pt.
-<fig/rho1.JPG, id=27, 1003.75pt x 1501.61pt>
+<fig/rho1.JPG, id=29, 1003.75pt x 1501.61pt>
 File: fig/rho1.JPG Graphic file (type jpg)
 <use fig/rho1.JPG>
-Package pdftex.def Info: fig/rho1.JPG  used on input line 165.
+Package pdftex.def Info: fig/rho1.JPG  used on input line 218.
 (pdftex.def)             Requested size: 96.19698pt x 143.89171pt.
 
 
-[4 <./fig/dataset.jpeg>]
-<fig/rho1col.JPG, id=31, 1003.75pt x 1387.1825pt>
+[5 <./fig/dataset.jpeg>]
+<fig/rho1col.JPG, id=33, 1003.75pt x 1387.1825pt>
 File: fig/rho1col.JPG Graphic file (type jpg)
 <use fig/rho1col.JPG>
-Package pdftex.def Info: fig/rho1col.JPG  used on input line 176.
+Package pdftex.def Info: fig/rho1col.JPG  used on input line 229.
 (pdftex.def)             Requested size: 96.19698pt x 132.9267pt.
 
 
-[5 <./fig/rho1.JPG> <./fig/rho1col.JPG>]
+[6 <./fig/rho1.JPG> <./fig/rho1col.JPG>]
 File: fig/dataset.jpeg Graphic file (type jpg)
 <use fig/dataset.jpeg>
-Package pdftex.def Info: fig/dataset.jpeg  used on input line 194.
+Package pdftex.def Info: fig/dataset.jpeg  used on input line 247.
 (pdftex.def)             Requested size: 96.19698pt x 145.2383pt.
 File: fig/rho1.JPG Graphic file (type jpg)
 <use fig/rho1.JPG>
-Package pdftex.def Info: fig/rho1.JPG  used on input line 200.
+Package pdftex.def Info: fig/rho1.JPG  used on input line 253.
 (pdftex.def)             Requested size: 96.19698pt x 143.89171pt.
-<fig/rho2.JPG, id=35, 1003.75pt x 1474.50874pt>
+<fig/rho2.JPG, id=37, 1003.75pt x 1474.50874pt>
 File: fig/rho2.JPG Graphic file (type jpg)
 <use fig/rho2.JPG>
-Package pdftex.def Info: fig/rho2.JPG  used on input line 206.
+Package pdftex.def Info: fig/rho2.JPG  used on input line 259.
 (pdftex.def)             Requested size: 96.19698pt x 141.29474pt.
-<fig/rho3.JPG, id=36, 1003.75pt x 1514.65875pt>
+<fig/rho3.JPG, id=38, 1003.75pt x 1514.65875pt>
 File: fig/rho3.JPG Graphic file (type jpg)
 <use fig/rho3.JPG>
-Package pdftex.def Info: fig/rho3.JPG  used on input line 212.
+Package pdftex.def Info: fig/rho3.JPG  used on input line 265.
 (pdftex.def)             Requested size: 96.19698pt x 145.1421pt.
 
 
-[6 <./fig/rho2.JPG> <./fig/rho3.JPG>]
-
-[7]
+[7 <./fig/rho2.JPG> <./fig/rho3.JPG>]
 
 [8]
 
-[9] (./report.aux)
+[9]
+
+[10] (./report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 8550 strings out of 474662
- 164131 string characters out of 5751108
+ 8552 strings out of 474662
+ 164193 string characters out of 5751108
  696497 words of memory out of 5000000
- 31528 multiletter control sequences out of 15000+600000
+ 31530 multiletter control sequences out of 15000+600000
  569649 words of font info for 78 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 108i,16n,107p,10982b,585s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </Users/brunobryan/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on report.pdf (9 pages, 618104 bytes).
+ 108i,11n,107p,10982b,585s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </Users/brunobryan/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on report.pdf (10 pages, 614366 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+ 112 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

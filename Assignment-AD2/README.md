@@ -6,7 +6,7 @@ Work assignment:
          
 - Assignment C
     - C.1 ✅
-    - C.2 ✅ ( da controllare )
+    - C.2 ✅ 
     - C.3 ✅
     - C.4 ✅
     - C.5 ✅
@@ -16,11 +16,11 @@ Work assignment:
     - B.2 ✅
     - B.3 ✅
 - Assignment A
-    - A.1 
-    - A.2
-    - A.3
-    - A.4
-    - A.5
+    - A.1 ✅
+    - A.2 ✅
+    - A.3 ✅
+    - A.4 ✅
+    - A.5 ✅
         
 
 

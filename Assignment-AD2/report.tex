@@ -30,7 +30,8 @@ I chose the dot product similarity as similarity function
 \[
 Y = W X \quad Y \in R^{d \times n} 
 \]
-d representes the dimensionality of the data while n is the number of data in the data set and k is the new dimensionality of the data.
+d representes the dimensionality of the data while n is the number of data in the data set and k is the new dimensionality of the data.\\
+We know that W is orthonormal ( $W^TW = I$ )
 \[
 S = Y^T Y = (W X)^T (W X) = X^T ( W^T W ) X = X^T X
 \]
@@ -39,7 +40,7 @@ Why this choice is meaningful:
 \begin{itemize}
     \item Interpretation \(\rightarrow\)the dot product measures the alignment between two MEPs' voting patterns. Higher values indicate greater agreement.
     \item Domain appropriateness \(\rightarrow\) in voting behavior analysis, we care about agreement on specific votes. The dot product naturally captures co-voting patterns ( when both MEPs vote the same way, it contributes positively to similarity )
-    \item Simplicity \(\rightarrow\) unlike cosine similarity, the dot product doesn't normalize by magnitude, which can be meaningful here ( MEPs who vote more often and agree more should have higher similarity )
+    \item Simplicity
 \end{itemize}
 Transformation steps required for our similarity computation:
 \begin{itemize}
@@ -76,6 +77,7 @@ The non negative eigenvalues of S are sorted in descending oder in the diagonal 
 \[
 X = I_{k \times n} \Lambda^{0.5} U^T
 \]
+In my model , I assumed $k=2$\\
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\linewidth]{imgs/D2-MEPS_by_EPG.png}

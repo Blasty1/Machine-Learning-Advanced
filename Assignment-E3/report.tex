@@ -67,53 +67,106 @@ W^+ = (W^T W)^{-1} W^T = (I_{k \times k})^{-1} W^T = W^T
 If we perform PCA on data that has not been centered, you will encounter the following issue: First Principal Component Bias, where the first principal component will often point from the origin toward the center of the data cluster rather than along the direction of maximum variance. This happens because the model tries to minimize the squared distance to the origin, treating the mean offset as a massive "signal" to be captured.
 
 \subsection*{Question 3.1.5}
-A single SVD operation \textbf{is sufficient} to perform PCA both on the rows and the columns.\\
-We try to recover the same expression found in the slides of Module 7 for the optimization criterion but using the trasposal of Y\\
+Answer: It depends on the centering requirements.
+
+A single SVD operation can provide both row and column structure, but \textbf{proper PCA on both rows and columns typically requires different preprocessing} (centering). We demonstrate the mathematical relationship below.
 Problem feature:
 \begin{itemize}
-  \item $Y \in R^{n \times d}$ 
-  \item $X \in R^{n \times k}$
-  \item $W \in R^{d \times k}$
-  \item $n$ is the number of datapoints
-  \item $d$ is the number of dimensions
-  \item $k$ is the desired number of dimensions ($k < d$)
-\end{itemize} 
-We are inverting the rows and the columns w.r.t the common representation of Y and X which is $Y \in R^{d \times n} $, $X \in R^{k \times n}$\\
+\item $Y \in \mathbb{R}^{n \times d}$ (data matrix, assumed appropriately centered)
+\item $X \in \mathbb{R}^{n \times k}$ (encoded representation)
+\item $W \in \mathbb{R}^{d \times k}$ (projection matrix with orthonormal columns)
+\item $n$ is the number of datapoints
+\item $d$ is the number of dimensions
+\item $k$ is the desired number of dimensions ($k \leq d$)
+\end{itemize}
+
+We are inverting the rows and the columns w.r.t. the common representation of $Y$ and $X$ which is $Y \in \mathbb{R}^{d \times n}$, $X \in \mathbb{R}^{k \times n}$.
+
 The mapping functions are:
 \begin{itemize}
-  \item Encoding $X = Y W$
-  \item Decoding $Y = X W^T$
+\item Encoding: $X = YW$
+\item Decoding: $\hat{Y} = XW^T = YWW^T$
 \end{itemize}
-The MSE can be seen as a reconstrunction error
-\begin{align*}
-  \E_W &= \E_Y\left[|| Y - dec(enc(Y))||_2^2 \right]\\
-  &= \E_Y\left[|| Y - Y W W^T||_2^2 \right]\\
-  &= \E_Y\left[(Y-Y W W^T)^T(Y-Y W W^T)\right]\\
-  &= \E_Y\left[Y Y^T - Y^T Y W W^T - W W^T Y^T Y + W W^T Y^T Y W W^T \right]\\
-  &= \E_Y[Y^T Y] - \tr(Y^T Y W W^T) - \tr(W W^T Y^T Y) + \tr(W W^T Y^T Y W W^T)
-\end{align*}
-As in the slide of Module 7 , $E_Y[Y^T Y]$ is constant and can be ignored for the optimization purpose
-We use the cycle property of the trace.
-\[
-  \E_W \approx - 2 \tr( W W^T Y^T Y) + \tr(W W^T W W^T Y^T Y)
-\]
-We know that $W^T W = I$
-\[
-  \E_W \approx - 2 \tr(W W^T Y^T Y)
-\]
-We apply the SVD on Y as $Y = U \Sigma V^T$ where
-\[
-U \in R^{n \times k} \quad \Sigma \in R^{k \times k} \quad V^T \in R^{n \times k}
-\]
-We replace it into the the previous definition
-\begin{align*}
-\tr\left(W W^T (U \Sigma V^T)^T (U \Sigma V^T)\right)\\
-\tr\left(W W^T V \Sigma \underbrace{U^T U}_{U^T U = I} \Sigma V^T\right)\\
-\tr\left(W W^T V \Sigma^2 V^T\right)\\
-\tr\left(V^T W W^T V \Sigma^2 \right) = \sigma_1^2 + \sigma_2^2 + . . . + \sigma_k \\
-\end{align*}
-We can see that the solution obtained is the same of what we would obtain using Y with the opposite structure ( $Y \in R^{d \times n}$ ) because the singular values are the same.
 
+The MSE can be seen as a reconstruction error:
+\begin{align*}
+  \mathbb{E}_W &= \mathbb{E}_Y\left[\| Y - \text{dec}(\text{enc}(Y))\|_2^2 \right]\\
+&= \mathbb{E}_Y\left[\| Y - YWW^T\|_2^2 \right]\\
+&= \mathbb{E}_Y\left[(Y-YWW^T)^T(Y-YWW^T)\right]\\
+&= \mathbb{E}_Y\left[Y^TY - Y^TYWW^T - WW^TY^TY + WW^TY^TYWW^T \right]\\
+&= \mathbb{E}_Y[Y^TY] - \text{Tr}(Y^TYWW^T) - \text{Tr}(WW^TY^TY) + \text{Tr}(WW^TY^TYWW^T)
+\end{align*}
+
+As in the slides of Module 7, $\mathbb{E}_Y[Y^TY]$ is constant and can be ignored for the optimization purpose.
+
+Using the cyclic property of the trace, where $\text{Tr}(Y^TYWW^T) = \text{Tr}(WW^TY^TY)$:
+\[
+  \mathbb{E}_W \approx - 2\text{Tr}(WW^TY^TY) + \text{Tr}(WW^TY^TYWW^T)
+\]
+
+Since $W^TW = I$ (orthonormal columns), we have:
+\[
+\text{Tr}(WW^TY^TYWW^T) = \text{Tr}(Y^TYWW^T) = \text{Tr}(WW^TY^TY)
+\]
+
+Therefore:
+\[
+  \mathbb{E}_W \approx -\text{Tr}(WW^TY^TY)
+\]
+
+To minimize $\mathbb{E}_W$, we maximize $\text{Tr}(WW^TY^TY)$.
+
+We apply the SVD on $Y$ as $Y = U\Sigma V^T$ where:
+\[
+U \in \mathbb{R}^{n \times n}, \quad \Sigma \in \mathbb{R}^{n \times d}, \quad V \in \mathbb{R}^{d \times d}
+\]
+with $U$ and $V$ having orthonormal columns.
+
+For the optimization, we consider the top $k$ components:
+\begin{align*}
+\text{Tr}\left(WW^T(U\Sigma V^T)^T(U\Sigma V^T)\right) &= \text{Tr}\left(WW^TV\Sigma^T U^TU\Sigma V^T\right)\\
+&= \text{Tr}\left(WW^TV\Sigma^2V^T\right) \quad \text{(since } U^TU = I\text{)}\\
+&= \text{Tr}\left(V^TWW^TV\Sigma^2\right) \quad \text{(cyclic property)}
+\end{align*}
+
+The optimal $W$ is given by the first $k$ columns of $V$, which gives:
+\[
+\text{Tr}(\Sigma_k^2) = \sigma_1^2 + \sigma_2^2 + \ldots + \sigma_k^2
+\]
+where $\sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_k$ are the top $k$ singular values.
+
+\subsection*{Conclusion: The Centering Caveat}
+
+\textbf{Mathematical insight:} A single SVD of $Y$ provides both:
+\begin{itemize}
+\item $U$: Left singular vectors (related to row structure)
+\item $V$: Right singular vectors (related to column structure)
+\end{itemize}
+
+\textbf{However, for proper PCA:}
+
+\begin{enumerate}
+\item \textbf{PCA on rows} (treating rows as datapoints):
+\begin{itemize}
+\item Requires: Column-centered $Y$ (subtract mean of each column)
+\item Uses: Right singular vectors $V$
+\end{itemize}
+
+\item \textbf{PCA on columns} (treating columns as datapoints):
+\begin{itemize}
+\item Requires: Row-centered $Y$ (subtract mean of each row)  
+\item Uses: Left singular vectors $U$
+\end{itemize}
+\end{enumerate}
+
+\textbf{Final answer:}
+\begin{itemize}
+\item A single SVD gives you both $U$ and $V$, capturing row and column structure
+\item \textbf{But} proper PCA on both rows and columns generally requires performing SVD on two differently centered versions of the data
+\item Exception: If the data has special structure (e.g., already centered both ways, or if centering is not required for the application), then one SVD suffices
+\end{itemize}
+
+The singular values remain the same under transposition, but the centering differs, which is why we typically need separate preprocessing for row-PCA vs. column-PCA.
 \subsection*{Question 3.1.6}
 When we work with PCA, we should normalize each column ( feature ) when attributes represent quantities in different units but it should be avoided when values between attribues are comparable.\\
 The SVD of Y is 
