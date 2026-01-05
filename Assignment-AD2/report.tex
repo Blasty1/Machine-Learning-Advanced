@@ -464,14 +464,159 @@ E(X) = \sum_{i<j} w_{ij} \left(d_{ij} - \|x_i - x_j\|\right)^2
 We apply the gradient wrt $x_i$ and we used the linearity and chain rule property of it.
 \begin{align*}
     \nabla_{x_i} E(x) &= \nabla_{x_i} \left( \sum_{i<j} w_{ij} \left(d_{ij} - \|x_i - x_j\|\right)^2 \right)\\
-    &= \nabla_{x_i} \left( \frac{1}{2} \sum_{k=1}^{n} \sum_{j \ne k} w_{kj} \left(d_{kj} - \|x_k - x_j\|\right)^2 \right)\\
+    &= \nabla_{x_i} \left( \frac{1}{2} \sum_{k=1}^{n} \sum_{j \ne k} w_{kj} \left(d_{kj} - \|x_k - x_j\|\right)^2 \right)w
 \end{align*}
-Because the distance function $||x_k - x_j||$ and the weights $w_{kj}$ are symmetric , the derivative of the terms where $k=i$ is identical to the derivative of the terms where $j=i$
+Here, the factor of $\frac{1}{2}$ accounts for counting each pair twice: once as (k,j) and once as (j,k).
+When we take $\nabla_{\mathbf{x}_i}$ we need to find which terms in the double sum depend on $x_i$, it appears in:
+\begin{itemize}
+    \item The outer sum when k=i: terms of the form $\|\mathbf{x}_i - \mathbf{x}_j\|$ for all $j \neq i$
+    \item The inner sum when j=i: terms of the form $\|\mathbf{x}_k - \mathbf{x}_i\|$ for all $k \neq i$
+\end{itemize}
+The expression becomes
+\[
+\nabla_{\mathbf{x}_i} E = \frac{1}{2} \left[ \sum_{j \neq i} \nabla_{\mathbf{x}_i} \left( w_{ij} (d_{ij} - \|\mathbf{x}_i - \mathbf{x}_j\|)^2 \right) + \sum_{k \neq i} \nabla_{\mathbf{x}_i} \left( w_{ki} (d_{ki} - \|\mathbf{x}_k - \mathbf{x}_i\|)^2 \right) \right]
+\]
+We can observe that the distances (d) and the weights are (w) are symmetric and both the sums have the same exact form, it becomes:
 \begin{align*}
-    \nabla_{x_i} E(x) &= \frac{1}{2} \sum_{i \ne j} w_{ij}  \nabla_{x_i} \left( \left(d_{ij} - \|x_i - x_j\|\right)^2 \right)\\
-    &= \frac{1}{2} \sum_{i \ne j} 2 w_{ij}  \left(d_{ij} - \|x_i - x_j\|\right) \nabla_{x_i}\left(- ||x_i - x_j||\right)\\
-    &= \frac{1}{2} \sum_{i \ne j} 2 w_{ij}  \left(d_{ij} - \|x_i - x_j\|\right) \left(-\frac{x_i - x_j}{||x_i - x_j||}\right)\\
+    \nabla_{x_i} E(x) &=  \sum_{i \ne j} w_{ij}  \nabla_{x_i} \left( \left(d_{ij} - \|x_i - x_j\|\right)^2 \right)\\
+    &= \sum_{i \ne j} 2 w_{ij}  \left(d_{ij} - \|x_i - x_j\|\right) \nabla_{x_i}\left(- ||x_i - x_j||\right)\\
+    &= \sum_{i \ne j} 2 w_{ij}  \left(d_{ij} - \|x_i - x_j\|\right) \left(-\frac{x_i - x_j}{||x_i - x_j||}\right)\\
     &= 2 \sum_{i \ne j} w_{ij}  \left(1- \frac{d_{ij}}{||x_i - x_j||} \right)\left(x_i - x_j\right)
 \end{align*}
-The 2 comes from the fact that each pair $(i,j)$ contributes to the gradient twice when we differentiate with respect to $x_i$.\\
+\subsection*{Question A.2}
+Considering a matrix $A \in R^{k \times k}$ be an orthonormal matrix, b $\in R^k$ and $1_n \in R^n$ a vector of all 1's. We want to show that $E(AX + b1_n^T) = E(X)$.\\
+\begin{align*}
+    E(AX + b1_n^T) &= \sum_{i<j} w_{ij} \left(d_{ij} - \|Ax_i + b1_n^T  - Ax_j - b1_n^T\|\right)^2\\
+    &= \sum_{i<j} w_{ij} \left(d_{ij} - \|Ax_i  - Ax_j\|\right)^2\\
+    &= \sum_{i<j} w_{ij} \left(d_{ij} - \|A(x_i  - Ax_j)\|\right)^2\\
+    &= \sum_{i<j} w_{ij} \left(d_{ij} - \|x_i  - x_j\|\right)^2\\
+    &= E(X)
+\end{align*}
+Because the stress $E(X)$ remains identical regardless of how we rotate (A) or shift (b) the entire configuration, the local optima are not unique. Any optimal solution can be transformed into another optimal solution with the same stress value.\\
+We used this property before $||Ax|| = ||x||$ with A orthonormal. We want to prove it in order to have a better understanding:
+\begin{align*}
+||Ax||^2 &= (Ax)^T (Ax)\\
+&= x^T A^T A x\\
+&= x^T x\\
+&= ||x||^2 
+\end{align*}
+Taking square roots we have proved that $||Ax|| = ||x||$
+\subsection*{Question A.3}
+We want to prove that $OPT(k_2) \leq OPT(k_1)$ where $k_1, k_2 \in N$ with $0 < k_1 < k_2$ and the optimal stress in dimension k is defined as $OPT(k) = \inf_{X \in R^{k \times n}} E(X)$\\
+Let $\mathbf{X}^* \in \mathbb{R}^{k_1 \times n}$ be an optimal solution for dimension $k_1$. This means that $\mathbf{X}^*$ minimizes the stress function $E$ over all possible configurations in $\mathbb{R}^{k_1 \times n}$. Therefore:
+$$E(\mathbf{X}^*) = \text{OPT}(k_1)$$
+
+We denote the columns of $\mathbf{X}^*$ as $\mathbf{x}_1^*, \mathbf{x}_2^*, \ldots, \mathbf{x}_n^*$, where each $\mathbf{x}_i^* \in \mathbb{R}^{k_1}$ represents the coordinates of point $i$ in the $k_1$-dimensional embedding.
+
+Now we construct a configuration $\tilde{\mathbf{X}} \in \mathbb{R}^{k_2 \times n}$ by embedding $\mathbf{X}^*$ into the higher-dimensional space $\mathbb{R}^{k_2}$. We do this by appending $(k_2 - k_1)$ zero coordinates to each point:
+$$\tilde{\mathbf{X}} = \begin{bmatrix} \mathbf{X}^* \\ \mathbf{0} \end{bmatrix} \in \mathbb{R}^{k_2 \times n}$$
+where $\mathbf{0} \in \mathbb{R}^{(k_2 - k_1) \times n}$ is a matrix containing only zeros.
+
+More explicitly, for each point $i = 1, 2, \ldots, n$, we define:
+$$\tilde{\mathbf{x}}_i = \begin{bmatrix} \mathbf{x}_i^* \\ \mathbf{0} \end{bmatrix} = \begin{bmatrix} x_{i,1}^* \\ x_{i,2}^* \\ \vdots \\ x_{i,k_1}^* \\ 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} \in \mathbb{R}^{k_2}$$
+
+where the last $(k_2 - k_1)$ components are all zero.
+
+Now we compute the Euclidean distance between any two points $\tilde{\mathbf{x}}_i$ and $\tilde{\mathbf{x}}_j$ in this higher-dimensional space:
+\begin{align*}
+\|\tilde{\mathbf{x}}_i - \tilde{\mathbf{x}}_j\|^2 &= \left\|\begin{bmatrix} \mathbf{x}_i^* \\ \mathbf{0} \end{bmatrix} - \begin{bmatrix} \mathbf{x}_j^* \\ \mathbf{0} \end{bmatrix}\right\|^2 \\
+&= \left\|\begin{bmatrix} \mathbf{x}_i^* - \mathbf{x}_j^* \\ \mathbf{0} \end{bmatrix}\right\|^2 \\
+&= \sum_{\ell=1}^{k_1} (x_{i,\ell}^* - x_{j,\ell}^*)^2 + \sum_{\ell=k_1+1}^{k_2} 0^2 \\
+&= \sum_{\ell=1}^{k_1} (x_{i,\ell}^* - x_{j,\ell}^*)^2 \\
+&= \|\mathbf{x}_i^* - \mathbf{x}_j^*\|^2
+\end{align*}
+
+Taking square roots on both sides:
+$$\|\tilde{\mathbf{x}}_i - \tilde{\mathbf{x}}_j\| = \|\mathbf{x}_i^* - \mathbf{x}_j^*\|$$
+
+This shows that the Euclidean distances between all pairs of points are preserved under this embedding. The additional zero coordinates do not contribute to the distance calculation.
+
+Now we compute the stress value for the configuration $\tilde{\mathbf{X}}$ in the $k_2$-dimensional space. Using the definition of the stress function from Equation (2):
+\begin{align*}
+E(\tilde{\mathbf{X}}) &= \sum_{i < j} w_{ij} \left(d_{ij} - \|\tilde{\mathbf{x}}_i - \tilde{\mathbf{x}}_j\|\right)^2
+\end{align*}
+
+Substituting the distance preservation property we just proved:
+\begin{align*}
+E(\tilde{\mathbf{X}}) &= \sum_{i < j} w_{ij} \left(d_{ij} - \|\mathbf{x}_i^* - \mathbf{x}_j^*\|\right)^2 \\
+&= E(\mathbf{X}^*)
+\end{align*}
+
+Since $\mathbf{X}^*$ was the optimal configuration in dimension $k_1$, we have:
+$$E(\tilde{\mathbf{X}}) = E(\mathbf{X}^*) = \text{OPT}(k_1)$$
+
+Now, observe that $\tilde{\mathbf{X}} \in \mathbb{R}^{k_2 \times n}$ is a feasible configuration in the $k_2$-dimensional space. By definition, $\text{OPT}(k_2)$ is the minimum value of the stress function over all possible configurations in $\mathbb{R}^{k_2 \times n}$:
+$$\text{OPT}(k_2) = \min_{\mathbf{Y} \in \mathbb{R}^{k_2 \times n}} E(\mathbf{Y})$$
+
+Since $\tilde{\mathbf{X}}$ is one particular configuration in $\mathbb{R}^{k_2 \times n}$, and the minimum is taken over all such configurations, we must have:
+$$\text{OPT}(k_2) \leq E(\tilde{\mathbf{X}})$$
+
+Combining this with our earlier result:
+$$\text{OPT}(k_2) \leq E(\tilde{\mathbf{X}}) = E(\mathbf{X}^*) = \text{OPT}(k_1)$$
+
+Therefore:
+$$\text{OPT}(k_2) \leq \text{OPT}(k_1)$$
+
+This proves that the minimum achievable stress in dimension $k_2$ is at most the minimum achievable stress in dimension $k_1$. In other words, as we increase the embedding dimension, the optimal stress value can only decrease or remain the same, but it cannot increase.
+
+The intuition behind this result is that higher-dimensional spaces provide more flexibility and degrees of freedom for positioning the points. Any configuration that exists in a lower-dimensional space can be embedded into a higher-dimensional space (by adding zero coordinates) without changing the pairwise distances. Therefore, the set of achievable distance configurations in higher dimensions is at least as large as in lower dimensions, which means we can achieve at least as good an approximation to the target distances $d_{ij}$.
+
+\subsection*{Question A.4}
+We want to explain why a local optima of the stress function satisfy $$\sum_{j \neq i} w_{ij} \left(1 - \frac{d_{ij}}{\|\mathbf{x}_i - \mathbf{x}_j\|}\right)(\mathbf{x}_i - \mathbf{x}_j) = \mathbf{0}$$
+We found the gradient of the stress function in the question A.1, which is:
+\[
+\nabla_{x_i} E = 2 \sum_{j\ne i} w_{ij} \left(1-\frac{d_{ij}}{||x_i - x_j||}\right)(x_i-x_j)
+\]
+A local optima of a differentiable function must satisfy the first-order optimality condition: the gradient must be zero $\nabla_{x_i} E = 0$.
+\[
+\nabla_{x_i} E = 2 \sum_{j\ne i} w_{ij} \left(1-\frac{d_{ij}}{||x_i - x_j||}\right)(x_i-x_j) = 0
+\]
+We divide by the constant 2 , in order to get the desired expression
+\[
+ \sum_{j\ne i} w_{ij} \left(1-\frac{d_{ij}}{||x_i - x_j||}\right)(x_i-x_j) = 0
+\]
+This represents a balance of forces: each point experiences forces from all other points.
+
+\subsection*{Question A.5}
+
+The local optimum condition from Question A.4 can be written as:
+\[
+\sum_{j \neq i} w_{ij} \left(1 - \frac{d_{ij}}{\|x_i - x_j\|}\right) (x_i - x_j) = 0
+\]
+
+This represents a \textbf{balance of forces} acting on each point $x_i$. Each neighboring point $x_j$ exerts a force on $x_i$ along the direction $(x_i -x_j)$ with magnitude proportional to $w_{ij}\left(1 - \frac{d_{ij}}{\|x_i - x_j\|}\right)$.
+
+\subsubsection*{Case (i): $\|x_i - x_j\| > d_{ij}$ (Points are too far apart)}
+
+When the embedded distance exceeds the target distance:
+\[
+1 - \frac{d_{ij}}{\|x_i - x_j\|} > 0
+\]
+
+The force is in the direction $(x_i - x_j)$, which points \textit{away} from $x_j$. However, since this represents a spring-like attraction, the positive coefficient means point $x_j$ exerts an attractive force on $x_i$, pulling it closer to reduce the excessive distance.
+
+Interpretation: Points that are too far apart attract each other to decrease their separation.
+
+\subsubsection*{Case (ii): $\|x_i - x_j\| < d_{ij}$ (Points are too close)}
+
+When the embedded distance is less than the target distance:
+\[
+1 - \frac{d_{ij}}{\|x_i - x_j\|} < 0
+\]
+
+The force has a negative coefficient, reversing the direction. Point $x_j$ now exerts a repulsive force on $x_i$, pushing it away to increase their separation.
+
+Interpretation: Points that are too close together repel each other to increase their distance.
+
+\subsubsection*{Equilibrium}
+
+At a local optimum, the sum of all attractive and repulsive forces on each point equals zero. This creates a configuration where:
+\begin{itemize}
+    \item Pairs with $\|x_i - x_j\| > d_{ij}$ contribute attractive forces
+    \item Pairs with $\|x_i - x_j\| < d_{ij}$ contribute repulsive forces
+    \item The weighted sum of these forces balances out at each point
+\end{itemize}
+
+This mechanical analogy is similar to a spring-mass system where springs have rest lengths $d_{ij}$ and stiffness $w_{ij}$, and the system reaches equilibrium when all forces balance.
+
 \end{document}
